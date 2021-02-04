@@ -30,8 +30,8 @@ Set your CRAN mirror. WOMBAT was made in Australia, so we choose the mirror run 
 ```
 cat > .conda_env/lib/R/etc/Rprofile.site <<- EOF
 local({
-  r <- getOption("repos")
-  r["CRAN"] <- "https://cran.csiro.au"
+  r <- getOption('repos')
+  r['CRAN'] <- 'https://cran.csiro.au'
   options(repos = r)
 })
 EOF
@@ -118,7 +118,7 @@ There are some other datasets required. These are
 
 # Running the workflow
 
-First, get the required data as listed in ["Data required for all steps"](#data-required-for-all-steps).
+First, get the required data as listed in [Data required for all steps](#data-required-for-all-steps).
 
 There are four main steps in the workflow, corresponding to four numbered directories. These are:
 
@@ -127,13 +127,13 @@ There are four main steps in the workflow, corresponding to four numbered direct
 3. `3_inversion`: The meat of the inversions. Using the reduced fields computed in the previous step, constructs a transport-model matrix. Preprocesses data to a suitable form for inversions. Performs the inversions using the WOMBAT statistical framework, and calculates posterior fluxes in a usable form.
 4. `4_results`: Generates the figures and tables presented in the WOMBAT paper.
 
-If you want to reproduce all the results, you need to run all the steps. The slowest is the first, running the transport model. If you just want to run inversions, you can find a link the required intermediate files in the ["Intermediate output of matching step to run inversions"](#intermediate-output-of-matching-step-to-run-inversions) section of this document. These contain the results of the `2_matching` step. If for some reason you need the results of the full GEOS-Chem runs, which are several terabytes, please either run them yourself (see below, preferable), or get in contact and we will see if we can arrange access to them from our archives.
+If you want to reproduce all the results, you need to run all the steps. The slowest is the first, running the transport model. If you just want to run inversions, you can find a link the required intermediate files in the [Intermediate output of matching step to run inversions](#intermediate-output-of-matching-step-to-run-inversions) section of this document. These contain the results of the `2_matching` step. If for some reason you need the results of the full GEOS-Chem runs, which are several terabytes, please either run them yourself (see below, preferable), or get in contact and we will see if we can arrange access to them from our archives.
 
 ## Completing the GEOS-Chem runs
 
 This step will complete the GEOS-Chem runs, and is by far the most computationally intensive part of the workflow. If you just want to do inversions on the same time period and data as we did, you can skip this step! That aside...
 
-First, follow the steps in ["Data required for all steps"](#data-required-for-all-steps) and ["Data required for the GEOS-Chem runs"](#data-required-for-the-geos-chem-runs). Then run
+First, follow the steps in [Data required for all steps](#data-required-for-all-steps) and [Data required for the GEOS-Chem runs](#data-required-for-the-geos-chem-runs). Then run
 
 ```
 make setup_runs
@@ -192,17 +192,17 @@ WOMBAT_MAX_WORKERS=8 make -j2 2_matching_targets
 
 You can modify the `WOMBAT_MAX_WORKERS` variable and the `-j` option to suit your local system.
 
-Alternatively, you can skip this step by downloading the intermediate files, see ["Intermediate output of matching step to run inversions"](#intermediate-output-of-matching-step-to-run-inversions).
+Alternatively, you can skip this step by downloading the intermediate files, see [Intermediate output of matching step to run inversions](#intermediate-output-of-matching-step-to-run-inversions).
 
 ## Running inversions and generating the figures
 
-If you have completed the matching step, or downloaded the required intermediate files (see ["Intermediate output of matching step to run inversions"](#intermediate-output-of-matching-step-to-run-inversions) above), you can run
+If you have completed the matching step, or downloaded the required intermediate files (see [Intermediate output of matching step to run inversions](#intermediate-output-of-matching-step-to-run-inversions) above), you can run
 
 ```
 make -j4 4_results_targets
 ```
 
-You can modify the `-j` option to suit your local system. If you have access to a GPU and have installed `tensorflow` (see "Install tensorflow"), you can run inversions using
+You can modify the `-j` option to suit your local system. If you have access to a GPU and have installed `tensorflow` (see [Install tensorflow](#install-tensorflow)), you can run inversions using
 
 ```
 WOMBAT_TENSORFLOW=1 make -j1 3_inversion
