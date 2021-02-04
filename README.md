@@ -71,14 +71,7 @@ Rscript -e "install.packages('tensorflow')""
 
 # Getting data
 
-All input datasets go into the `data` directory.
-
-Files to put here
-
-- `data/GEOSChem.Restart.20140901_0000z.nc4`
-- `data/TRANSCOM_Map_MZT.nc`
-- `data/TRANSCOM_mask.mozart.1.875x2.5.nc`
-
+All input datasets go into the `data` directory. There are a few files already there, but the rest will need to be retrieved from their primary sources.
 
 ## Data required for all steps
 
