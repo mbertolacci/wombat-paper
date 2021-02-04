@@ -91,16 +91,18 @@ GEOS-Chem requires meteorological fields and CO2 emission to run. These go into 
 
 The directories you need to download are:
 
-- `ExtData/GEOS_2x2.5/GEOS_FP`
-- `ExtData/CHEM_INPUTS/MODIS_LAI_201204`
-- `ExtData/CHEM_INPUTS/Olson_Land_Map_201203`
-- `ExtData/HEMCO/AEIC/v2015-01`
-- `ExtData/HEMCO/CO2/v2015-04/OCEAN`
-- `ExtData/HEMCO/CO2/v2015-04/BIOFUEL`
-- `ExtData/HEMCO/QFED/v2018-07/2014`
-- `ExtData/HEMCO/QFED/v2018-07/2015`
-- `ExtData/HEMCO/QFED/v2018-07/2016`
-- `ExtData/HEMCO/QFED/v2018-07/2017`
+```
+ExtData/GEOS_2x2.5/GEOS_FP
+ExtData/CHEM_INPUTS/MODIS_LAI_201204
+ExtData/CHEM_INPUTS/Olson_Land_Map_201203
+ExtData/HEMCO/AEIC/v2015-01
+ExtData/HEMCO/CO2/v2015-04/OCEAN
+ExtData/HEMCO/CO2/v2015-04/BIOFUEL
+ExtData/HEMCO/QFED/v2018-07/2014
+ExtData/HEMCO/QFED/v2018-07/2015
+ExtData/HEMCO/QFED/v2018-07/2016
+ExtData/HEMCO/QFED/v2018-07/2017
+```
 
 There are some other datasets required. These are
 
