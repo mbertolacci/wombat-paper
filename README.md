@@ -1,4 +1,4 @@
-# Workflow
+# WOMBAT: A fully Bayesian global flux-inversion framework
 
 This repository contains code to reproduce the results in the paper [WOMBAT: A fully Bayesian global flux-inversion framework](link). This README assumes at least a passing familiarity with the WOMBAT framework, or of Bayesian-synthesis inversions more generally.
 
