@@ -66,7 +66,7 @@ If you have access to a GPU, it's worth installing tensorflow to speed up invers
 
 ```
 pip3 install tensorflow-gpu
-Rscript -e "install.packages('tensorflow')""
+Rscript -e "install.packages('tensorflow')"
 ```
 
 # Getting data
