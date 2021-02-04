@@ -1,0 +1,49 @@
+Package: wombat
+Title: WOllongong Methodology for Bayesian Assimilation of Trace-gases
+Version: 0.0.1
+Authors@R:
+    c(person(given = "Michael",
+             family = "Bertolacci",
+             role = c("aut", "cre"),
+             email = "m.bertolacci@gmail.com",
+             comment = c(ORCID = "0000-0003-0317-5941")),
+      person(given = "Andrew",
+             family = "Zammit-Mangion",
+             role = "aut"),
+      person(given = "Noel",
+             family = "Cressie",
+             role = "aut"),
+      person(given = "Yi",
+             family = "Cao",
+             role = "aut"))
+Description: Implements the WOllongong Methodology for Bayesian Assimilation of
+    Trace-gases.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    FRK,
+    Matrix,
+    WoodburyMatrix,
+    armspp,
+    coda,
+    dplyr,
+    logger,
+    lubridate,
+    ggplot2,
+    memoise,
+    digest,
+    sf,
+    progress,
+    tidyr,
+    fastsparse
+RoxygenNote: 7.1.1
+Suggests:
+    testthat,
+    lintr,
+    shiny,
+    shinyWidgets,
+    colourpicker,
+    rnaturalearth,
+    rnaturalearthdata,
+    tensorflow

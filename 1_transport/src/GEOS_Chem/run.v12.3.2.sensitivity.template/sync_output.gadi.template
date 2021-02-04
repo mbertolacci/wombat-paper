@@ -1,0 +1,13 @@
+#!/bin/bash
+#PBS -l wd
+
+set -e
+set -x
+
+rsync -av \
+    output/ \
+    ${SYNC_TO_BASE}/{{ path }}/output/
+
+find output/ -delete
+mkdir output
+touch output/TRANSFER_COMPLETE

@@ -1,0 +1,75 @@
+# NOTE(mgnb): convention used in this file: no target depends on a target that
+# occurs earlier in the file
+
+2_MATCHING_SOURCE = $(2_MATCHING)/src
+2_MATCHING_INTERMEDIATES = $(2_MATCHING)/intermediates
+
+$(shell mkdir -p $(2_MATCHING_INTERMEDIATES))
+
+MATCHING_UTILS_PARTIAL = $(2_MATCHING_SOURCE)/partials/utils.R
+export MATCHING_UTILS_PARTIAL
+
+TCCON_DATA = $(DATA)/TCCON/20170706
+OCO2_DATA = $(DATA)/OCO2_b70b_10sec_WL15_GOOD_v10.nc
+
+GEOS_CHEM_MATCHED_RUNS = $(2_MATCHING_INTERMEDIATES)/GEOS_Chem/matched-runs
+
+GEOS_CHEM_MATCHED_RUNS_LAST_FLUX_AGGREGATED = $(GEOS_CHEM_MATCHED_RUNS)/LAST_FLUX_AGGREGATED
+
+GEOS_CHEM_MATCHED_RUNS_LAST_SUBSETTED = $(GEOS_CHEM_MATCHED_RUNS)/LAST_SUBSETTED
+GEOS_CHEM_OCO2_SUBSETTED = $(GEOS_CHEM_MATCHED_RUNS)/run.v12.3.2.base/subsetted-oco2.nc
+
+GEOS_CHEM_MATCHED_RUNS_LAST_COMPUTED_XCO2 = $(GEOS_CHEM_MATCHED_RUNS)/LAST_COMPUTED_XCO2
+
+GEOS_CHEM_MATCHED_RUNS_LAST_COMPUTED_XCO2_3HR = $(GEOS_CHEM_MATCHED_RUNS)/LAST_COMPUTED_XCO2_3HR
+
+GEOS_CHEM_MATCHED_RUNS_LAST_COMBINED = $(GEOS_CHEM_MATCHED_RUNS)/LAST_COMBINED
+
+2_MATCHING_TARGETS += $(GEOS_CHEM_MATCHED_RUNS_LAST_COMPUTED_XCO2) \
+	$(GEOS_CHEM_MATCHED_RUNS_LAST_SUBSETTED) \
+	$(GEOS_CHEM_MATCHED_RUNS_LAST_COMBINED) \
+	$(GEOS_CHEM_MATCHED_RUNS_LAST_FLUX_AGGREGATED) \
+
+LINT_TARGETS += lint_2_matching
+
+## Intermediates
+
+$(GEOS_CHEM_MATCHED_RUNS_LAST_COMBINED): $(2_MATCHING_SOURCE)/combine-geos-chem.R $(GEOS_CHEM_MATCHED_RUNS_LAST_COMPUTED_XCO2) $(GEOS_CHEM_MATCHED_RUNS_LAST_SUBSETTED)
+	Rscript $< \
+		--matched-runs-directory $(GEOS_CHEM_MATCHED_RUNS)
+	touch $@
+
+$(GEOS_CHEM_MATCHED_RUNS_LAST_COMPUTED_XCO2_3HR): $(2_MATCHING_SOURCE)/compute-xco2-3hr-geos-chem.R
+	Rscript $< \
+		--meteorology-run $(GEOS_CHEM_BASE_RUN) \
+		--input-runs $(GEOS_CHEM_RUNS) \
+		--output-runs $(GEOS_CHEM_MATCHED_RUNS)
+	touch $@
+
+$(GEOS_CHEM_MATCHED_RUNS_LAST_COMPUTED_XCO2): $(2_MATCHING_SOURCE)/compute-xco2-geos-chem.R $(GEOS_CHEM_MATCHED_RUNS_LAST_SUBSETTED)
+	Rscript $< \
+		--oco2-observations $(OCO2_DATA) \
+		--tccon-observation-directory $(TCCON_DATA) \
+		--matched-runs-directory $(GEOS_CHEM_MATCHED_RUNS)
+	touch $@
+
+$(GEOS_CHEM_MATCHED_RUNS_LAST_SUBSETTED): $(2_MATCHING_SOURCE)/subset-geos-chem.py $(GEOS_CHEM_RUNS)/RUNS_COMPLETE
+	python3 $< \
+		--meteorology-run $(GEOS_CHEM_BASE_RUN) \
+		--oco2-observations $(OCO2_DATA) \
+		--tccon-observation-directory $(TCCON_DATA) \
+		--runs-directory $(GEOS_CHEM_RUNS) \
+		--output-directory $(GEOS_CHEM_MATCHED_RUNS)
+	touch $@
+
+$(GEOS_CHEM_MATCHED_RUNS_LAST_FLUX_AGGREGATED): $(2_MATCHING_SOURCE)/aggregate-flux-geos-chem.py $(GEOS_CHEM_RUNS)/RUNS_COMPLETE
+	python3 $< \
+		--runs-directory $(GEOS_CHEM_RUNS) \
+		--output-directory $(GEOS_CHEM_MATCHED_RUNS)
+	touch $@
+
+lint_2_matching:
+	pycodestyle \
+		$(2_MATCHING_SOURCE)/subset-geos-chem.py \
+		$(2_MATCHING_SOURCE)/aggregate-flux-geos-chem.py \
+		$(2_MATCHING_SOURCE)/geoschem

@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH -c {{ threads }}
+#SBATCH -N 1
+#SBATCH -p ALLNODES
+#SBATCH --hint=nomultithread
+#SBATCH --job-name=gc.sensitivity.base
+#SBATCH --output=gc.run.out
+
+set -ax
+
+echo "start time: $(date)"
+echo "run on $(hostname -s) by user $(whoami) with $SLURM_CPUS_PER_TASK threads"
+
+ulimit -s unlimited
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export OMP_STACKSIZE=500m
+
+source /etc/profile.d/conda.sh
+conda activate ../../../../../../.conda_env
+
+mkdir -p output
+srun -c $OMP_NUM_THREADS ./geos.mp | tee output/geos.mp.log
+srun -c $OMP_NUM_THREADS bash postprocess-run.sh
+
+echo "end time: $(date)"

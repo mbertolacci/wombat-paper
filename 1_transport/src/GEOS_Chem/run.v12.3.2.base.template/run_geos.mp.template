@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+set -x
+
+ulimit -s unlimited
+
+export OMP_NUM_THREADS={{ threads }}
+export OMP_STACKSIZE=500m
+
+mkdir -p output
+./geos.mp > output/geos.mp.log
+bash postprocess-run.sh

@@ -1,0 +1,64 @@
+###############################################################################
+###  HISTORY.rc file for GEOS-Chem CO2 specialty simulations                ###
+###  Contact: GEOS-Chem Support Team (geos-chem-support@as.harvard.edu)     ###
+###############################################################################
+
+#============================================================================
+# EXPID allows you to specify the beginning of the file path corresponding
+# to each diagnostic collection.  For example:
+#
+#   EXPID: ./GEOSChem 
+#      Will create netCDF files whose names begin "GEOSChem",
+#      in this run directory.
+#
+#   EXPID: ./OutputDir/GEOSChem
+#      Will create netCDF files whose names begin with "GEOSChem"
+#      in the OutputDir sub-folder of this run directory.
+#
+#============================================================================
+EXPID:  ./output/GEOSChem
+
+COLLECTIONS: 'Restart',
+             'SpeciesConc',
+             'SpeciesConcDaily',
+::
+#==============================================================================
+# %%%%% THE Restart COLLECTION %%%%%
+#
+# GEOS-Chem restart file fields
+#
+# Available for all simulations
+#==============================================================================
+  Restart.template:           '%y4%m2%d2_%h2%n2z.nc4',
+  Restart.format:             'CFIO',
+  Restart.frequency:          'End',
+  Restart.duration:           'End',
+  Restart.mode:               'instantaneous'
+  Restart.fields:             'SpeciesRst_?ALL?               ', 'GIGCchem',
+                              'Met_DELPDRY                    ', 'GIGCchem',
+                              'Met_PS1WET                     ', 'GIGCchem',
+                              'Met_PS1DRY                     ', 'GIGCchem',
+                              'Met_SPHU1                      ', 'GIGCchem',
+                              'Met_TMPU1                      ', 'GIGCchem',
+::
+#==============================================================================
+# %%%%% THE SpeciesConc COLLECTION %%%%%
+#
+# GEOS-Chem species concentrations (default = advected species)
+#
+# Available for all simulations
+#==============================================================================
+  SpeciesConc.template:       '%y4%m2%d2_%h2%n2z.nc4',
+  SpeciesConc.format:         'CFIO',
+  SpeciesConc.frequency:      00000000 010000
+  SpeciesConc.duration:       00000001 000000
+  SpeciesConc.mode:           'time-averaged'
+  SpeciesConc.fields:         'SpeciesConc_CO2                ', 'GIGCchem',
+::
+  SpeciesConcDaily.template:       '%y4%m2.nc4',
+  SpeciesConcDaily.format:         'CFIO',
+  SpeciesConcDaily.frequency:      00000001 000000
+  SpeciesConcDaily.duration:       00000100 000000
+  SpeciesConcDaily.mode:           'time-averaged'
+  SpeciesConcDaily.fields:         'SpeciesConc_CO2                ', 'GIGCchem',
+::

@@ -1,0 +1,279 @@
+#!/usr/bin/perl -w
+
+#EOC
+#------------------------------------------------------------------------------
+#                  GEOS-Chem Global Chemical Transport Model                  !
+#------------------------------------------------------------------------------
+#BOP
+#
+# !MODULE: getRunInfo
+#
+# !DESCRIPTION: This script extracts information from the input.geos file
+#  and prints the result. The input arguments are (1) the location of file
+#  input.geos, and (2) the ID of run information to be extracted. Mapping 
+#  between ID and input.geos information are is as follows: 0:MET, 1:GRID,
+#  2:SIM, 3:NEST, 4:START, and 5:END.
+#\\
+#\\
+# !USES:
+#
+require 5.003;                   # Need this version of Perl or newer
+use English;                     # Use English language
+use Carp;                        # Get detailed error messages
+use strict;                      # Use "IMPLICIT NONE" syntax
+#
+# !PUBLIC MEMBER FUNCTIONS
+#  &getRunInfo
+# 
+# !CALLING SEQUENCE:
+#  getRunInfo RUNDIR ID
+#    where RUNDIR is the path location of input.geos and ID is the 
+#    ID of the run information to retrieve
+#
+# !REMARKS:
+#  Designed for use with the root-level Makefile in a run directory when
+#  using the unit test or a run directory copied from UnitTest.
+#                                                                             .
+#  ID value   Information returned
+#  -------------------------------------------------------------------
+#  0          Met field type      (geosfp, merra2, etc.             )
+#  1          Horizontal grid     (4x5, 2x25, etc.                  )
+#  2          Simulation type     (standard, benchmark, etc.        )
+#  3          Nested grid option  (na, ch, as, etc.                 )
+#  4          Start date & time   (in YYYYMMDDhhmm format           )
+#  5          End   date & time   (in YYYYMMDDhhmm format           )
+#  6          Root data directory
+#  7          Start date only     (in YYYYMMDD format               )
+#  8          End   date only     (in YYYYMMDD format               )
+#  9          Start time only     (in hhmm format                   )
+#  10         End   time only     (in hhmm format                   )
+#
+# !REVISION HISTORY: 
+#  06 Apr 2015 - E. Lundgren - Initial version
+#EOP
+#------------------------------------------------------------------------------
+#                  GEOS-Chem Global Chemical Transport Model                  !
+#------------------------------------------------------------------------------
+#BOP
+#
+# !IROUTINE: getRunInfo
+#
+# !DESCRIPTION: Extracts run information from input.geos.
+#\\
+#\\
+# !INTERFACE:
+#
+sub getInfo($$) {
+#
+# !INPUT PARAMETERS:
+#
+  my ( $rundir, $id ) = @_;
+#
+# !CALLING SEQUENCE:
+#  &getInfo( $rundir, $id );
+#
+# !REVISION HISTORY:
+#  06 Apr 2015 - E. Lundgren - Initial version
+#  27 Apr 2015 - M. Sulprizio- Now use YYYYMMDDhhmm format for start/end time
+#  31 Mar 2015 - E. Lundgren - Add special case of soa_svpoa
+#  22 May 2017 - R. Yantosca - For HEMCO standalone, convert YYYY-MM-DD to
+#                              YYYYMMDD and hh:mm:ss to hhmmss
+#  19 Sep 2017 - R. Yantosca - Add options to return start & end time in just
+#                              YYYYMMDD format (e.g. for use in filenames)
+#  05 Nov 2018 - M. Sulprizio- Add options to return start & end time in hhmm
+#                              format for use in filenames
+#EOP
+#------------------------------------------------------------------------------
+#BOC
+#
+# !LOCAL VARIABLES:
+#
+  # Scalars
+  my $runstr  = ""; 
+  my $line    = "";
+  my $runinfo = "";
+
+  # Arrays
+  my @linestrings   = ();
+  my @dates         = ();
+  my @times         = ();
+  my @runinfoarray  = ();
+
+  # Make sure that an input.geos file is found; otherwise print a "";
+  if ( -f "$rundir/input.geos" ) {
+  
+    # get start run time if $id is 4 or 7, end run time is $id is 5 or 8
+    if ( $id == 4 || $id == 5 || $id == 7 || $id == 8 || $id == 9 || $id == 10)  {
+        
+      if    ( $id == 4 || $id == 7 || $id == 9 ) { $runstr = "Start"; }
+      elsif ( $id == 5 || $id == 8 || $id == 10) { $runstr = "End";   }
+   
+      # Grep for date & time in input.geos
+      $line = qx( grep "$runstr.*YYYYMMDD" $rundir/input.geos );
+      chomp( $line );
+  
+      # Split by spaces
+      @linestrings = split( ' ', $line );
+  
+      # Place start and end times into YYYYMMDDhhmm format (ID = 4 or 5)
+      # or just YYYYMMDD format (ID = 7 or 8) or just hhmm format (ID = 9 or 10)
+      $runinfo = "$linestrings[4]$linestrings[5]";
+      if    ( $id == 4 || $id == 5 ) { $runinfo = substr( $runinfo, 0, 12 ); } 
+      elsif ( $id == 7 || $id == 8 ) { $runinfo = substr( $runinfo, 0, 8  ); }
+      elsif ( $id == 9 || $id == 10) { $runinfo = substr( $runinfo, 9, 4 ); }
+
+    } else {
+ 
+      # Grep for input.geos header
+      $line = qx( grep "GEOS-CHEM UNIT TEST SIMULATION" $rundir/input.geos );
+      chomp( $line );
+      
+      # Split by spaces
+      @linestrings = split( ' ', $line );
+      
+      # Extract the original run directory name
+      $runstr = "$linestrings[4]";
+      
+      # Split by '_' delimiter
+      @runinfoarray  = split( '_', $runstr );
+      
+      # If the id is less than the # of rundirstrings, then extract the 
+      # run info from the rundir name. Else, set runinfo to 'n' which is 
+      # used as NEST for non-nested simulations
+      if ( $id < 0+@runinfoarray ) {
+      
+        # Special case for complexSOA_SVPOA
+	if ( ( $id == 2 || $id == 3 ) && 0+@runinfoarray == 4 ) {
+	  if ( $runinfoarray[3] eq "SVPOA" ) {
+	    if ( $id == 2 ) { $runinfo = "complexSOA_SVPOA" } # SIM=complexSOA_SVPOA
+	    if ( $id == 3 ) { $runinfo = "n" }                # NEST=n
+	  } else {
+	    $runinfo = "$runinfoarray[$id]"; 
+	  }
+        } else {
+         $runinfo = "$runinfoarray[$id]"; 
+        }	
+
+      } else {
+        $runinfo = "n";
+      }
+
+    }				
+
+  } elsif ( -f "$rundir/HEMCO_sa_Config.rc" ) {
+
+    # Hardcode simulation type to HEMCO for now
+    if ( $id == 2 ) {
+
+       $runinfo = "HEMCO"
+
+    # Hardcode nest to "n" for now
+    } elsif ( $id == 3 ) {
+
+       $runinfo = "n"
+
+    # Get start run time if $id is 4,7,or 9, end run time if $id is 5,8,or 10
+    } elsif ( $id == 4 || $id == 5 || $id == 7 || $id == 8 || $id == 9 || $id == 10 ) {
+
+      if ( -f "$rundir/HEMCO_sa_Time.rc" ) {
+
+	if ( $id == 4 || $id == 7 || $id == 9  ) { $runstr = "START"; }
+	if ( $id == 5 || $id == 8 || $id == 10 ) { $runstr = "END";   }
+
+	# Grep for start and date
+	$line = qx( grep "$runstr" $rundir/HEMCO_sa_Time.rc );
+        chomp( $line );
+
+        # Split by spaces
+        @linestrings = split( ' ', $line );
+
+	# Translatet YYYY-MM-DD into YYYYMMDD
+	# and hh:mm:ss to hhmmss
+	@dates = split( '-', $linestrings[1] );
+	@times = split( ':', $linestrings[2] );
+
+        # Return start and end times in YYYYMMDDhhmm format (ID = 4 or 5)
+	# or just YYYYMMDD format (ID = 7 or 8) or hhmm format (ID = 9 or 10)
+	if ( $id == 7 || $id == 8 ) { 
+	  $runinfo = "$dates[0]$dates[1]$dates[2]";
+        } elsif ( $id == 9 || $id == 10 ) {
+ 	  $runinfo = "$times[0]$times[1]";
+        } elsif ( $id == 4 || $id == 5 ) {
+ 	  $runinfo = "$dates[0]$dates[1]$dates[2]$times[0]$times[1]";
+        }
+      }
+
+    } else {
+
+      if ($id == 0) { $runstr = "MET:" }
+      if ($id == 1) { $runstr = "RES:" }
+
+      # Grep for input.geos header
+      $line = qx( grep "$runstr" $rundir/HEMCO_sa_Config.rc );
+      chomp( $line );
+      
+      # Split by spaces
+      @linestrings = split( ' ', $line );
+
+      # Return met or grid type
+      $runinfo = "$linestrings[1]";
+
+    }
+
+  }
+
+  # Print the result
+  print "$runinfo";
+  
+  return(0)
+}
+#EOP
+#------------------------------------------------------------------------------
+#                  GEOS-Chem Global Chemical Transport Model                  !
+#------------------------------------------------------------------------------
+#BOP
+#
+# !IROUTINE: main
+#
+# !DESCRIPTION: Driver routine for the getRunInfo script.
+#\\
+#\\
+# !INTERFACE:
+#
+sub main() {
+#
+# !CALLING SEQUENCE:
+#  getRunInfo DIR ID
+#
+# !REVISION HISTORY:
+#  07 Apr 2015 - E. Lundgren - Initial version
+#  20 Sep 2017 - R. Yantosca - ID can now be from 0-8
+#  05 Nov 2018 - M. Sulprizio- ID can now be from 0-10
+#EOP
+#------------------------------------------------------------------------------
+#BOC
+#
+# !LOCAL VARIABLES:
+#
+  my $nArgs = scalar( @ARGV );
+  my $msg   = "";
+
+  # Exits with an error message if the ID argument is not within valid range
+  if ( $nArgs >= 0 && $nArgs <= 10 ) {
+    &getInfo( @ARGV ); 
+  } else { 
+    $msg = "getRunInfo: $ARGV[1] is an invalid value for the ID argument!";
+    print "$msg"; 
+    exit(1);    
+  }
+  return ( 0 );
+}
+
+#------------------------------------------------------------------------------
+
+# Call the main program
+main();
+
+# Return normally
+exit(0);
+#EOC
