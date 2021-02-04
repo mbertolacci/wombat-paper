@@ -4,6 +4,8 @@ This repository contains code to reproduce the results in the paper [WOMBAT: A f
 
 Unless stated otherwise, all commands are to be run in the root directory of the repository.
 
+<img src="images/flux.png" />
+
 # Installation/setting up an environment
 
 This workflow requires both Python version 3+ and R version 4+, along with a variety of dependency packages in both languages. The easiest way to set up an environment in which to run this code is to use [Anaconda](https://www.anaconda.com/). Instructions for setting up an appropriate conda environment are provided below. If, for some reason, you don't want to do that, you can adapt the instructions below to a local installation using `pip` and your local copy of R - everything should work okay. For what remains, we assume you have Anaconda installed.
