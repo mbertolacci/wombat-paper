@@ -36,6 +36,46 @@ include $(4_RESULTS)/module.mk
 3_inversion_targets: $(3_INVERSION_TARGETS)
 4_results_targets: $(4_RESULTS_TARGETS)
 
+wombat-inversion-intermediates.tar.gz:
+	tar -c -z -f $@ \
+	    3_inversion/intermediates/control-emissions.fst \
+	    3_inversion/intermediates/control-mole-fraction.fst \
+	    3_inversion/intermediates/perturbations.fst \
+	    3_inversion/intermediates/osse-anomaly.fst \
+	    3_inversion/intermediates/sensitivities.fst
+
+wombat-blinded-code.tar.gz:
+	rm -r wombat-paper
+	rsync \
+	    --exclude .git \
+	    --exclude .DS_Store \
+	    --exclude intermediates \
+	    --exclude figures \
+	    -a \
+	    ./ \
+	    wombat-paper/
+	find \
+		wombat-paper \
+		-type f \
+		-not -path \*.png \
+		-not -path \*.nc \
+		-not -path \*.nc4 \
+		| xargs sed -i "" \
+        -e "s/mgnb/anon/g; \
+			s/Michael/Anon/g; \
+			s/Bertolacci/Anon/g; \
+			s/m.bertolacci@gmail.com//g; \
+			s/Andrew/Anon/g; \
+			s/Zammit-Mangion/Anon/g; \
+			s/Noel/Anon/g; \
+			s/Cressie/Anon/g; \
+			s/Yi/Anon/g; \
+			s/Cao/Anon/g; \
+			s/WOllongong//g; \
+			s/0000-0003-0317-5941//g"
+	tar czf blinded-code.tar.gz wombat-paper
+	rm -r wombat-paper
+
 lint: $(LINT_TARGETS)
 clean: $(CLEAN_TARGETS)
 
