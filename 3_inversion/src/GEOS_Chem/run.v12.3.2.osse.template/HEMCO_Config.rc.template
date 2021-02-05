@@ -142,7 +142,7 @@ END SECTION EXTENSION SWITCHES
 )))FOSSIL_CDIAC
 
 (((FOSSIL_ODIAC
-0 FOSSILCO2_ODIAC   $ROOT/CO2/v2020-02/FOSSIL/ODIAC_CO2.monthly.generic.1x1.nc   CO2 2000-2015/1-12/1/0 C xy kg/m2/s CO2   40/41/80 1 2
+0 FOSSILCO2_ODIAC   {{ odiac2018_file }}   land 2000-2015/1-12/1/0 C xy kg/m2/s CO2   40/41/80 1 2
 0 FOSSILCO2FF_ODIAC -                                                            -   -                  - -  -       CO2ff 40/41/80 1 2
 )))FOSSIL_ODIAC
 
@@ -204,7 +204,7 @@ END SECTION EXTENSION SWITCHES
 )))BBIO_SIB3
 
 (((BIO_CASA_GFED41S
-0 CASA4_BIO_CO2    $ROOT/CO2/v2020-02/BIO/CT2019.prior_b4_3hrly.nc CO2 2000-2019/1-12/1-31/0-23 C xy kg/m2/s CO2    301/302/303/304/305/306/307/308/309/310/311/312/313/314/315/316/317/318/319/320/321/322 3 1
+0 CASA4_BIO_CO2    {{ ct2019_b4_file }} CO2 2000-2019/1-12/1-31/0-23 C xy kg/m2/s CO2    301/302/303/304/305/306/307/308/309/310/311/312/313/314/315/316/317/318/319/320/321/322 3 1
 0 CASA4_BIO_CO2BAL -                                      -   -                        - -  -       CO2bal 301/302/303/304/305/306/307/308/309/310/311/312/313/314/315/316/317/318/319/320/321/322 3 1
 )))BIO_CASA_GFED41S
 
@@ -255,7 +255,7 @@ END SECTION EXTENSION SWITCHES
 )))SHIP
 
 (((INTL_BUNKER_ODIAC
-0 INTL_BUNKERCO2_ODIAC   $ROOT/CO2/v2020-04/INTL_BUNKER/ODIAC_CO2_intl_bunker.monthly.generic.1x1.nc   CO2 2000-2015/1-12/1/0 C xy kg/m2/s CO2   - 6 1
+0 INTL_BUNKERCO2_ODIAC   {{ odiac2018_file }}   intl_bunker 2000-2015/1-12/1/0 C xy kg/m2/s CO2   - 6 1
 0 INTL_BUNKERCO2IB_ODIAC -                                                            -   -                  - -  -       CO2se 40/41 6 1
 )))INTL_BUNKER_ODIAC
 

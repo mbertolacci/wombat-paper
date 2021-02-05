@@ -18,6 +18,8 @@ args <- arg_parser('', hide.opts = TRUE) %>%
   add_argument('--base-run', '') %>%
   add_argument('--obspack-data', '') %>%
   add_argument('--ext-data', '') %>%
+  add_argument('--ct2019-b4', '') %>%
+  add_argument('--odiac2018', '') %>%
   add_argument('--template', '') %>%
   add_argument('--restart-file', '') %>%
   add_argument('--code-directory', '') %>%
@@ -137,6 +139,8 @@ write_scale_factors(
 
 template_variables <- c(
   'ext_data' = relative_path(output_path, args$ext_data),
+  'ct2019_b4_file' = relative_path(output_path, args$ct2019_b4),
+  'odiac2018_file' = relative_path(output_path, args$odiac2018),
   'start_date' = '20140901',
   'end_date' = '20170401',
   'obspack_data' = relative_path(output_path, args$obspack_data),

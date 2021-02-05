@@ -167,10 +167,12 @@ $(OSSE_RUN_BASE).%/RUN_COMPLETE: $(OSSE_RUN_BASE).%/LAST_PREPARED
 	(cd $(OSSE_RUN_BASE).$* && bash run_geos.mp)
 	touch $@
 
-$(OSSE_RUN_BASE).%/LAST_PREPARED: $(3_INVERSION_SOURCE)/osse-run.R
+$(OSSE_RUN_BASE).%/LAST_PREPARED: $(3_INVERSION_SOURCE)/osse-run.R $(CT2019_PRIOR_HEMCO) $(ODIAC2018_PRIOR_HEMCO)
 	Rscript $< \
 		--name $* \
 		--ext-data $(EXT_DATA) \
+		--ct2019-b4 $(CT2019_PRIOR_HEMCO) \
+		--odiac2018 $(ODIAC2018_PRIOR_HEMCO) \
 		--base-run $(GEOS_CHEM_BASE_RUN) \
 		--obspack-data $(GEOS_CHEM_OBSPACK) \
 		--threads $(OSSE_THREADS) \
