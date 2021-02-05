@@ -45,7 +45,7 @@ wombat-inversion-intermediates.tar.gz:
 	    3_inversion/intermediates/sensitivities.fst
 
 wombat-blinded-code.tar.gz:
-	rm -r wombat-paper
+	rm -rf wombat-paper
 	rsync \
 	    --exclude .git \
 	    --exclude .DS_Store \
@@ -73,7 +73,7 @@ wombat-blinded-code.tar.gz:
 			s/Cao/Anon/g; \
 			s/WOllongong//g; \
 			s/0000-0003-0317-5941//g"
-	tar czf blinded-code.tar.gz wombat-paper
+	tar czf $@ wombat-paper
 	rm -r wombat-paper
 
 lint: $(LINT_TARGETS)
