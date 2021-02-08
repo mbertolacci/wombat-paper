@@ -17,8 +17,8 @@ ESTIMATE_COLOURS <- c(
 PLOT_AXES <- c(
   'Global land' = expression('Global land flux [PgC '*yr^-1*']'),
   'Global oceans' = expression('Global ocean flux [PgC '*yr^-1*']'),
-  'T04' = expression('Flux in TransCom 04: South American Temperate [PgC '*yr^-1*']'),
-  'T06' = expression('Flux in TransCom 06: Southern Africa [PgC '*yr^-1*']'),
+  'T04' = expression('Flux in TransCom3 04: South American Temperate [PgC '*yr^-1*']'),
+  'T06' = expression('Flux in TransCom3 06: Southern Africa [PgC '*yr^-1*']'),
   'N tropics (0 - 23.5)' = expression('Flux in northern tropics [PgC '*yr^-1*']'),
   'S tropics (-23.5 - 0)' = expression('Flux in southern tropics [PgC '*yr^-1*']')
 )

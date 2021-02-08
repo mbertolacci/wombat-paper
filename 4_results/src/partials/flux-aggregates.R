@@ -278,7 +278,7 @@ stopifnot(length(region_plots) %in% c(3, 4))
 
 output <- wrap_plots(
   do.call(c, lapply(region_plots, function(x) {
-    list(wrap_elements(grid::textGrob(x$title)), x$annual, x$monthly)
+    list(wrap_elements(grid::textGrob(x$title, gp = grid::gpar(fontsize = 11, fontface = 'bold'))), x$annual, x$monthly)
   })),
   guides = 'collect',
   design = if (length(region_plots) == 3) '

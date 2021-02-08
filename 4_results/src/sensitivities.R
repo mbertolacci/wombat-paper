@@ -93,7 +93,7 @@ perturbations_i <- perturbations %>%
   filter(region %in% c(2, 6), month_start == '2016-01-01', abs(flux_density) > 0) %>%
   mutate(
     date = '2016-01',
-    region = sprintf('TransCom %02d', region)
+    region = sprintf('TransCom3 %02d', region)
   )
 
 sensitivities_i <- xco2_sensitivity %>%
@@ -106,7 +106,7 @@ sensitivities_i <- xco2_sensitivity %>%
     )
   ) %>%
   mutate(
-    region = sprintf('TransCom %02d', region)
+    region = sprintf('TransCom3 %02d', region)
   )
 
 flux_plot <- ggplot() +
