@@ -1,6 +1,6 @@
 # WOMBAT: A fully Bayesian global flux-inversion framework
 
-This repository contains code to reproduce the results in the paper [WOMBAT: A fully Bayesian global flux-inversion framework](link). This README assumes at least a passing familiarity with the WOMBAT framework, or of Bayesian-synthesis inversions more generally.
+This repository contains code to reproduce the results in the paper [WOMBAT: A fully Bayesian global flux-inversion framework](https://arxiv.org/abs/2102.04004). This README assumes at least a passing familiarity with the WOMBAT framework, or of Bayesian-synthesis inversions more generally.
 
 Unless stated otherwise, all commands are to be run in the root directory of the repository.
 
@@ -124,7 +124,7 @@ There are four main steps in the workflow, corresponding to four numbered direct
 1. `1_transport`: Sets up and performs GEOS-Chem runs for the prior mean of the CO2 mole-fraction field, and for the mole-fraction basis functions which arise from perturbing the flux field. The outputs of these runs are netcdf files containing the space/time field of the CO2 fluxes and the space/height/time field of the CO2 mole fractions. This is the most computationally intensive step in the workflow by far.
 2. `2_matching`: Postprocesses the outputs in the previous step. In particular, monthly averages of the flux field are computed, and the mole-fraction field is subsetted to certain locations and times of interest (corresponding to locations/times with data).
 3. `3_inversion`: The meat of the inversions. Using the reduced fields computed in the previous step, constructs a transport-model matrix. Preprocesses data to a suitable form for inversions. Performs the inversions using the WOMBAT statistical framework, and calculates posterior fluxes in a usable form.
-4. `4_results`: Generates the figures and tables presented in the WOMBAT paper.
+4. `4_results`: Generates the figures and tables presented in the [WOMBAT paper](https://arxiv.org/abs/2102.04004).
 
 If you want to reproduce all the results, you need to run all the steps. The slowest is the first, running the transport model. If you just want to run inversions, you can find a link the required intermediate files in the [Intermediate output of matching step to run inversions](#intermediate-output-of-matching-step-to-run-inversions) section of this document. These contain the results of the `2_matching` step. If for some reason you need the results of the full GEOS-Chem runs, which are several terabytes, please either run them yourself (see below, preferable), or get in contact and we will see if we can arrange access to them from our archives.
 
@@ -145,7 +145,7 @@ will create the directories for the base and sensitivities runs of GEOS-Chem. Th
 
 The base run needs to be completed before the sensitivity runs can complete, because the latter need restart files produced by the former.
 
-How you actually run these depends on your system. On a single core machine, completing these runs takes several years of computation. For the WOMBAT paper, we completed the runs partly on our local HPC, and partly on the [NCI's](http://nci.org.au/) Gadi supercomputer. The absolute simplest way is to change into the run directory and run:
+How you actually run these depends on your system. On a single core machine, completing these runs takes several years of computation. For the [WOMBAT paper](https://arxiv.org/abs/2102.04004), we completed the runs partly on our local HPC, and partly on the [NCI's](http://nci.org.au/) Gadi supercomputer. The absolute simplest way is to change into the run directory and run:
 
 ```
 bash run_geos.mp
