@@ -113,7 +113,23 @@ There are some other datasets required. These are
 
 ## Intermediate output of matching step to run inversions
 
-*These are currently in preparation, and will be made available very soon.*
+To avoid the need to run GEOS-Chem, we have placed some intermediate files [online at the NIASRA CKAN website](https://hpc.niasra.uow.edu.au/ckan/dataset/wombat-paper-intermediate). To use these, download the tar archive from CKAN, then extract the files into the root directory of this repository with
+
+```
+tar xzf ~/path/to/wombat-inversion-intermediates-20210209.tar.gz
+```
+
+Then run
+
+```
+touch 3_inversion/intermediates/control-emissions.fst \
+  3_inversion/intermediates/control-mole-fraction.fst \
+  3_inversion/intermediates/perturbations.fst \
+  3_inversion/intermediates/osse-anomaly.fst \
+  3_inversion/intermediates/sensitivities.fst
+```
+
+to bring the timestamps up to date. Then you can run the workflow from step 3 onwards as described in [Running inversions and generating the figures](#running-inversions-and-generating-the-figures).
 
 # Running the workflow
 
