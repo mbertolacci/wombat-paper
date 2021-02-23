@@ -72,7 +72,9 @@ wombat-blinded-code.tar.gz:
 			s/Yi/Anon/g; \
 			s/Cao/Anon/g; \
 			s/WOllongong//g; \
-			s/0000-0003-0317-5941//g"
+			s/0000-0003-0317-5941//g; \
+			s/https:\/\/arxiv\.org\/abs\/2102.04004//g; \
+			s/.*BLIND_LINE.*//g"
 	tar czf $@ wombat-paper
 	rm -r wombat-paper
 
