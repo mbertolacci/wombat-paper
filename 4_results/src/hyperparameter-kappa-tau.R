@@ -95,6 +95,6 @@ ggsave(
   args$output,
   plot = output,
   width = DISPLAY_SETTINGS$full_width,
-  height = 9,
+  height = 7,
   units = 'cm'
 )

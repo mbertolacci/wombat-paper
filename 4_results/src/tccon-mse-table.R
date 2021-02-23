@@ -19,8 +19,8 @@ sink(args$output)
 printf('\\begin{tabular}{l|%s|ll}\n', collapse0(rep('l', nlevels(overall_metric_df$group) - 2)))
 printf('& %s\\\\ \\hline\n', paste_columns(
   sprintf(
-    '\\multicolumn{1}{%sc}{\\adjustbox{angle=45,lap=\\width-1em}{%s}}',
-    ifelse(overall_metric_df$group == 'WOMBAT Post.', '|', ''),
+    '\\multicolumn{1}{c%s}{\\adjustbox{angle=45,lap=\\width-1em}{%s}}',
+    ifelse(overall_metric_df$group == 'UoE', '|', ''),
     overall_metric_df$group
   )
 ))

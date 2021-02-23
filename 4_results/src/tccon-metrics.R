@@ -53,5 +53,5 @@ ggsave_base(
   args$output,
   output,
   width = DISPLAY_SETTINGS$full_width,
-  height = DISPLAY_SETTINGS$full_height - 7
+  height = DISPLAY_SETTINGS$full_height - 3.5
 )

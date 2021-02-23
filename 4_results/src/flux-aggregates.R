@@ -15,6 +15,7 @@ parser$add_argument('--show-mip-fluxes', action = 'store_true', default = FALSE)
 parser$add_argument('--flux-samples-lg')
 parser$add_argument('--flux-samples-ln')
 parser$add_argument('--show-prior-uncertainty', action = 'store_true', default = FALSE)
+parser$add_argument('--small-y-axes', action = 'store_true', default = FALSE)
 parser$add_argument('--output')
 args <- parser$parse_args()
 
@@ -38,7 +39,8 @@ flux_samples <- bind_rows(
     )
 )
 
-legend_n_columns <- 3
+legend_n_columns <- 2
 show_prior_uncertainty <- FALSE
 show_mip_fluxes <- args$show_mip_fluxes
+small_y_axes <- args$small_y_axes
 source(Sys.getenv('RESULTS_FLUX_AGGREGATES_PARTIAL'))

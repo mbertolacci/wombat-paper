@@ -135,7 +135,7 @@ printf(
     collapse = ''
   )
 )
-cat('& \\multicolumn{2}{c}{RMSE} & \\multicolumn{2}{c}{CRPS} \\\\\n')
+cat('& \\multicolumn{2}{c}{RMSE [PgC mo$^{-1}$]} & \\multicolumn{2}{c}{CRPS} \\\\\n')
 printf(
   'Configuration & %s \\\\\n \\hline\n',
   paste_columns(rep(paste_columns(groups), 2))

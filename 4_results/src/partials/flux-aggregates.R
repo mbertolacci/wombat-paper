@@ -11,10 +11,10 @@ ESTIMATE_COLOURS <- c(
   'LG, uncorrelated errors (mean, 95% cred. int.)' = 'orange',
   'LN, correlated errors (mean, 95% cred. int.)' = get_colour('wombat_ln'),
   'LN, uncorrelated errors (mean, 95% cred. int.)' = '#4a716d',
-  'LG, offline-corrected (mean, 95% cred. int.)' = get_colour('wombat_lg'),
-  'LG, online-corrected (mean, 95% cred. int.)' = 'orange',
-  'LN, offline-corrected (mean, 95% cred. int.)' = get_colour('wombat_ln'),
-  'LN, online-corrected (mean, 95% cred. int.)' = '#4a716d'
+  'LG, offline-corr. (mean, 95% cred. int.)' = get_colour('wombat_lg'),
+  'LG, online-corr. (mean, 95% cred. int.)' = 'orange',
+  'LN, offline-corr. (mean, 95% cred. int.)' = get_colour('wombat_ln'),
+  'LN, online-corr. (mean, 95% cred. int.)' = '#4a716d'
 )
 
 ESTIMATE_LINETYPES = c(
@@ -30,10 +30,10 @@ ESTIMATE_LINETYPES = c(
   'LG, uncorrelated errors (mean, 95% cred. int.)' = 'longdash',
   'LN, correlated errors (mean, 95% cred. int.)' = 'solid',
   'LN, uncorrelated errors (mean, 95% cred. int.)' = 'longdash',
-  'LG, offline-corrected (mean, 95% cred. int.)' = 'solid',
-  'LG, online-corrected (mean, 95% cred. int.)' = 'longdash',
-  'LN, offline-corrected (mean, 95% cred. int.)' = 'solid',
-  'LN, online-corrected (mean, 95% cred. int.)' = 'longdash'
+  'LG, offline-corr. (mean, 95% cred. int.)' = 'solid',
+  'LG, online-corr. (mean, 95% cred. int.)' = 'longdash',
+  'LN, offline-corr. (mean, 95% cred. int.)' = 'solid',
+  'LN, online-corr. (mean, 95% cred. int.)' = 'longdash'
 )
 
 log_info('Loading flux samples')
@@ -278,7 +278,17 @@ stopifnot(length(region_plots) %in% c(3, 4))
 
 output <- wrap_plots(
   do.call(c, lapply(region_plots, function(x) {
-    list(wrap_elements(grid::textGrob(x$title, gp = grid::gpar(fontsize = 11, fontface = 'bold'))), x$annual, x$monthly)
+    list(
+      wrap_elements(
+        grid::textGrob(
+          x$title,
+          gp = grid::gpar(fontsize = 11, fontface = 'bold')
+        ),
+        clip = FALSE
+      ),
+      x$annual,
+      x$monthly
+    )
   })),
   guides = 'collect',
   design = if (length(region_plots) == 3) '
@@ -305,6 +315,13 @@ output <- wrap_plots(
   }
 ) &
   theme(legend.position = 'bottom')
+
+if (small_y_axes) {
+  output <- output &
+    theme(
+      axis.title.y = element_text(size = 8)
+    )
+}
 
 log_info('Saving')
 ggsave(

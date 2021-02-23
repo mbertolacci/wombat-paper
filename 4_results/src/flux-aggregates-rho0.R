@@ -53,4 +53,5 @@ flux_samples <- bind_rows(
 legend_n_columns <- 3
 show_prior_uncertainty <- FALSE
 show_mip_fluxes <- args$show_mip_fluxes
+small_y_axes <- FALSE
 source(Sys.getenv('RESULTS_FLUX_AGGREGATES_PARTIAL'))

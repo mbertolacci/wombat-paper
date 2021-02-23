@@ -149,7 +149,7 @@ $(4_RESULTS_FIGURES)/osse-bias-correlated-land-ocean.pdf: \
 		--flux-samples-ln-no-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-no-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
-		--height 14 \
+		--height 12.7 \
 		--output $@
 
 $(4_RESULTS_FIGURES)/osse-bias-correlated-tropics.pdf: \
@@ -175,7 +175,7 @@ $(4_RESULTS_FIGURES)/osse-bias-correlated-tropics.pdf: \
 		--flux-samples-ln-no-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-no-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
-		--height 18 \
+		--height 17 \
 		--output $@
 
 $(4_RESULTS_FIGURES)/osse-bias-correlated-t04-t06.pdf: \
@@ -201,7 +201,7 @@ $(4_RESULTS_FIGURES)/osse-bias-correlated-t04-t06.pdf: \
 		--flux-samples-ln-no-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-no-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
-		--height 18.5 \
+		--height 17.5 \
 		--output $@
 
 $(4_RESULTS_FIGURES)/osse-bias-correlated-table.tex: \
@@ -296,7 +296,7 @@ $(4_RESULTS_FIGURES)/flux-aggregates-globals.pdf: \
 		--flux-samples-ln $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 		--show-mip-fluxes \
 		--mip-fluxes $(3_INVERSION_INTERMEDIATES)/mip-fluxes.fst \
-		--height 19 \
+		--height 16.5 \
 		--output $@
 
 $(4_RESULTS_FIGURES)/flux-aggregates-zonal.pdf: \
@@ -314,7 +314,8 @@ $(4_RESULTS_FIGURES)/flux-aggregates-zonal.pdf: \
 		--flux-samples-ln $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 		--show-mip-fluxes \
 		--mip-fluxes $(3_INVERSION_INTERMEDIATES)/mip-fluxes.fst \
-		--height 20.5 \
+		--height 18 \
+		--small-y-axes \
 		--output $@
 
 $(4_RESULTS_FIGURES)/flux-aggregates-rho0-globals.pdf: \
@@ -375,7 +376,7 @@ $(4_RESULTS_FIGURES)/flux-aggregates-bias-globals.pdf: \
 		--flux-samples-ln $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 		--flux-samples-lg-online-corrected $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LGr-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-online-corrected $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LNr-FIXEDAO-FIXEDWO5.rds \
-		--height 19 \
+		--height 18 \
 		--output $@
 
 ## Intermediates
