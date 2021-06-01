@@ -113,9 +113,9 @@ There are some other datasets required. These are
 
 ## Intermediate output of matching step to run inversions
 
-<!-- BLIND_LINE -->To avoid the need to run GEOS-Chem, we have placed some intermediate files [online at the NIASRA CKAN website](https://hpc.niasra.uow.edu.au/ckan/dataset/wombat-paper-intermediate).
+To avoid the need to run GEOS-Chem, we have placed some intermediate files [online at the NIASRA CKAN website](https://hpc.niasra.uow.edu.au/ckan/dataset/wombat-paper-intermediate).
 
-To use these, download the tar archive from CKAN, then extract the files into the root directory of this repository with
+To use these, download the tar archive, then extract the files into the root directory of this repository with
 
 ```
 tar xzf ~/path/to/wombat-inversion-intermediates-20210209.tar.gz
