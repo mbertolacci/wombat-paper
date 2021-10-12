@@ -11,7 +11,31 @@ ESTIMATE_COLOURS <- c(
   'Bias correction/correlated errors' = 'red',
   'No bias correction/correlated errors' = 'purple',
   'Bias correction/uncorrelated errors' = 'orange',
-  'No bias correction/uncorrelated errors' = '#00aa00'
+  'No bias correction/uncorrelated errors' = '#00aa00',
+  'No bias correction/uncorrelated errors/fixed hyperparameters' = '#004400',
+  'True total flux' = '#aaaaaa'
+)
+
+ESTIMATE_SHAPES <- c(
+  'Prior mean' = 1,
+  'Truth' = 2,
+  'Bias correction/correlated errors' = 3,
+  'No bias correction/correlated errors' = 4,
+  'Bias correction/uncorrelated errors' = 5,
+  'No bias correction/uncorrelated errors' = 6,
+  'No bias correction/uncorrelated errors/fixed hyperparameters' = 7,
+  'True total flux' = 0
+)
+
+ESTIMATE_LINETYPES <- c(
+  'Prior mean' = 1,
+  'Truth' = 2,
+  'Bias correction/correlated errors' = 3,
+  'No bias correction/correlated errors' = 4,
+  'Bias correction/uncorrelated errors' = 5,
+  'No bias correction/uncorrelated errors' = 6,
+  'No bias correction/uncorrelated errors/fixed hyperparameters' = 7,
+  'True total flux' = 3
 )
 
 PLOT_AXES <- c(
@@ -30,10 +54,12 @@ parser$add_argument('--flux-samples-lg-bias-correlated')
 parser$add_argument('--flux-samples-lg-no-bias-correlated')
 parser$add_argument('--flux-samples-lg-bias-uncorrelated')
 parser$add_argument('--flux-samples-lg-no-bias-uncorrelated')
+parser$add_argument('--flux-samples-lg-no-bias-uncorrelated-fixedhyper')
 parser$add_argument('--flux-samples-ln-bias-correlated')
 parser$add_argument('--flux-samples-ln-no-bias-correlated')
 parser$add_argument('--flux-samples-ln-bias-uncorrelated')
 parser$add_argument('--flux-samples-ln-no-bias-uncorrelated')
+parser$add_argument('--flux-samples-ln-no-bias-uncorrelated-fixedhyper')
 parser$add_argument('--height', type = 'double')
 parser$add_argument('--output')
 args <- parser$parse_args()
@@ -82,6 +108,13 @@ flux_samples <- bind_rows(
       estimate = 'Bias correction/uncorrelated errors'
     ),
   read_flux_samples(
+    args$flux_samples_ln_no_bias_uncorrelated_fixedhyper,
+  ) %>%
+    mutate(
+      group = 'LN',
+      estimate = 'No bias correction/uncorrelated errors/fixed hyperparameters'
+    ),
+  read_flux_samples(
     args$flux_samples_lg_bias_correlated,
     c('Truth', 'Prior', 'Posterior')
   ) %>%
@@ -113,6 +146,13 @@ flux_samples <- bind_rows(
     mutate(
       group = 'LG',
       estimate = 'Bias correction/uncorrelated errors'
+    ),
+  read_flux_samples(
+    args$flux_samples_lg_no_bias_uncorrelated_fixedhyper,
+  ) %>%
+    mutate(
+      group = 'LG',
+      estimate = 'No bias correction/uncorrelated errors/fixed hyperparameters'
     )
 ) %>%
   mutate(
@@ -203,13 +243,20 @@ output <- ggplot(
     colour = '#777777'
   ) +
   stat_ellipse(
-    data = annual_flux_samples
+    data = annual_flux_samples # %>% filter(!endsWith(as.character(estimate), 'params'))
   ) +
   geom_point(
-    data = annual_flux_means
+    data = annual_flux_means # %>% filter(!endsWith(as.character(estimate), 'params'))
   ) +
   scale_colour_manual(values = ESTIMATE_COLOURS) +
+  scale_shape_manual(values = ESTIMATE_SHAPES) +
+  scale_linetype_manual(values = ESTIMATE_LINETYPES) +
   facet_grid(group ~ year) +
+  guides(
+    colour = guide_legend(ncol = 2),
+    shape = guide_legend(ncol = 2),
+    linetype = guide_legend(ncol = 2)
+  ) +
   labs(
     x = PLOT_AXES[args$region1],
     y = PLOT_AXES[args$region2],
@@ -223,8 +270,9 @@ output <- ggplot(
 output_grob <- ggplotGrob(output)
 # HACK(mgnb): remove the lines for 'Prior Mean' and 'Truth'
 blank_grob <- grid::rectGrob(gp = grid::gpar(col = NA))
-output_grob$grobs[[22]]$grobs[[1]]$grobs[[16]] <- blank_grob
-output_grob$grobs[[22]]$grobs[[1]]$grobs[[19]] <- blank_grob
+output_grob$grobs[[22]]$grobs[[1]]$grobs[[4]] <- blank_grob
+output_grob$grobs[[22]]$grobs[[1]]$grobs[[7]] <- blank_grob
+output_grob$grobs[[22]]$grobs[[1]]$grobs[[26]] <- blank_grob
 
 log_info('Saving')
 ggsave_base(

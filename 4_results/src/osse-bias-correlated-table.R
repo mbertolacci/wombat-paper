@@ -8,10 +8,12 @@ parser$add_argument('--flux-samples-lg-bias-correlated')
 parser$add_argument('--flux-samples-lg-no-bias-correlated')
 parser$add_argument('--flux-samples-lg-bias-uncorrelated')
 parser$add_argument('--flux-samples-lg-no-bias-uncorrelated')
+parser$add_argument('--flux-samples-lg-no-bias-uncorrelated-fixedhyper')
 parser$add_argument('--flux-samples-ln-bias-correlated')
 parser$add_argument('--flux-samples-ln-no-bias-correlated')
 parser$add_argument('--flux-samples-ln-bias-uncorrelated')
 parser$add_argument('--flux-samples-ln-no-bias-uncorrelated')
+parser$add_argument('--flux-samples-ln-no-bias-uncorrelated-fixedhyper')
 parser$add_argument('--output')
 args <- parser$parse_args()
 
@@ -59,6 +61,13 @@ flux_samples <- bind_rows(
       estimate = 'Bias correction/uncorrelated errors'
     ),
   read_flux_samples(
+    args$flux_samples_ln_no_bias_uncorrelated_fixedhyper,
+  ) %>%
+    mutate(
+      group = 'LN',
+      estimate = 'No bias correction/uncorrelated errors/fixed hyperparameters'
+    ),
+  read_flux_samples(
     args$flux_samples_lg_bias_correlated,
     c('Truth', 'Prior', 'Posterior')
   ) %>%
@@ -90,6 +99,13 @@ flux_samples <- bind_rows(
     mutate(
       group = 'LG',
       estimate = 'Bias correction/uncorrelated errors'
+    ),
+  read_flux_samples(
+    args$flux_samples_lg_no_bias_uncorrelated_fixedhyper,
+  ) %>%
+    mutate(
+      group = 'LG',
+      estimate = 'No bias correction/uncorrelated errors/fixed hyperparameters'
     )
 ) %>%
   ungroup()
@@ -137,7 +153,7 @@ printf(
 )
 cat('& \\multicolumn{2}{c}{RMSE [PgC mo$^{-1}$]} & \\multicolumn{2}{c}{CRPS} \\\\\n')
 printf(
-  'Configuration & %s \\\\\n \\hline\n',
+  'Setup & %s \\\\\n \\hline\n',
   paste_columns(rep(paste_columns(groups), 2))
 )
 for (i in seq_along(estimates)) {

@@ -132,6 +132,12 @@ if ('FIXEDAO' %in% case_parts) {
   process_model[['a']] <- c(rep(NA, 11), rep(0, 11))
 }
 
+if ('FIXEDHYPER' %in% case_parts) {
+  run_measurement_model[['gamma']] <- 0.8
+  process_model[['a']] <- rep(0, 22)
+  process_model[['w']] <- rep(1 / 0.09, 22)
+}
+
 time_since <- with(process_model$control_mole_fraction, {
   as.double(time - lubridate::ymd_hms('2015-01-01 00:00:00'), units = 'days')
 })

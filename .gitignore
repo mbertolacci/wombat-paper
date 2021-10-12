@@ -3,5 +3,6 @@
 2_matching/intermediates/
 3_inversion/intermediates/
 3_inversion/figures/
-4_figures/intermediates/
+4_results/intermediates/
+4_results/figures/
 *.pyc

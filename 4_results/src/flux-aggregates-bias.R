@@ -47,7 +47,7 @@ flux_samples <- bind_rows(
     ),
 )
 
-show_mip_fluxes <- FALSE
+categories <- c('Prior', 'LG, o', 'LN, o')
 show_prior_uncertainty <- FALSE
 legend_n_columns <- 2
 small_y_axes <- FALSE

@@ -18,8 +18,10 @@ export RESULTS_FLUX_AGGREGATES_PARTIAL
 	$(4_RESULTS_FIGURES)/osse-bias-correlated-t04-t06.pdf \
 	$(4_RESULTS_FIGURES)/osse-bias-correlated-table.tex \
 	$(4_RESULTS_FIGURES)/flux-aggregates-table.txt \
-	$(4_RESULTS_FIGURES)/flux-aggregates-globals.pdf \
-	$(4_RESULTS_FIGURES)/flux-aggregates-zonal.pdf \
+	$(4_RESULTS_FIGURES)/flux-aggregates-globals-lg.pdf \
+	$(4_RESULTS_FIGURES)/flux-aggregates-globals-ln.pdf \
+	$(4_RESULTS_FIGURES)/flux-aggregates-zonal-lg.pdf \
+	$(4_RESULTS_FIGURES)/flux-aggregates-zonal-ln.pdf \
 	$(4_RESULTS_FIGURES)/tccon-time-series.pdf \
 	$(4_RESULTS_FIGURES)/tccon-metrics.pdf \
 	$(4_RESULTS_FIGURES)/tccon-mse-table.tex \
@@ -132,10 +134,12 @@ $(4_RESULTS_FIGURES)/osse-bias-correlated-land-ocean.pdf: \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 	$(RESULTS_BASE_PARTIAL) \
 	$(RESULTS_DISPLAY_PARTIAL)
 	Rscript $< \
@@ -145,10 +149,12 @@ $(4_RESULTS_FIGURES)/osse-bias-correlated-land-ocean.pdf: \
 		--flux-samples-lg-no-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-lg-no-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-lg-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+		--flux-samples-lg-no-bias-uncorrelated-fixedhyper $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 		--flux-samples-ln-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-no-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-no-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+		--flux-samples-ln-no-bias-uncorrelated-fixedhyper $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 		--height 12.7 \
 		--output $@
 
@@ -158,10 +164,12 @@ $(4_RESULTS_FIGURES)/osse-bias-correlated-tropics.pdf: \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 	$(RESULTS_BASE_PARTIAL) \
 	$(RESULTS_DISPLAY_PARTIAL)
 	Rscript $< \
@@ -171,10 +179,12 @@ $(4_RESULTS_FIGURES)/osse-bias-correlated-tropics.pdf: \
 		--flux-samples-lg-no-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-lg-no-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-lg-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+		--flux-samples-lg-no-bias-uncorrelated-fixedhyper $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 		--flux-samples-ln-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-no-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-no-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+		--flux-samples-ln-no-bias-uncorrelated-fixedhyper $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 		--height 17 \
 		--output $@
 
@@ -184,10 +194,12 @@ $(4_RESULTS_FIGURES)/osse-bias-correlated-t04-t06.pdf: \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 	$(RESULTS_BASE_PARTIAL) \
 	$(RESULTS_DISPLAY_PARTIAL)
 	Rscript $< \
@@ -197,10 +209,12 @@ $(4_RESULTS_FIGURES)/osse-bias-correlated-t04-t06.pdf: \
 		--flux-samples-lg-no-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-lg-no-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-lg-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+		--flux-samples-lg-no-bias-uncorrelated-fixedhyper $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 		--flux-samples-ln-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-no-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-no-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+		--flux-samples-ln-no-bias-uncorrelated-fixedhyper $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 		--height 17.5 \
 		--output $@
 
@@ -210,10 +224,12 @@ $(4_RESULTS_FIGURES)/osse-bias-correlated-table.tex: \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+	$(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 	$(RESULTS_BASE_PARTIAL) \
 	$(RESULTS_DISPLAY_PARTIAL)
 	Rscript $< \
@@ -221,10 +237,12 @@ $(4_RESULTS_FIGURES)/osse-bias-correlated-table.tex: \
 		--flux-samples-lg-no-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-lg-no-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-lg-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+		--flux-samples-lg-no-bias-uncorrelated-fixedhyper $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LG-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 		--flux-samples-ln-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-no-bias-correlated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-no-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
 		--flux-samples-ln-bias-uncorrelated $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-RHO0-FIXEDAO-FIXEDWO5.rds \
+		--flux-samples-ln-no-bias-uncorrelated-fixedhyper $(3_INVERSION_INTERMEDIATES)/osse-flux-aggregates-samples-random1-LN-TRUEBIAS-NOBIAS-RHO0-FIXEDHYPER.rds \
 		--output $@
 
 # TCCON related plots
@@ -281,42 +299,80 @@ $(4_RESULTS_FIGURES)/flux-aggregates-table.txt: \
 		--mip-fluxes $(3_INVERSION_INTERMEDIATES)/mip-fluxes.fst \
 		--output $@
 
-$(4_RESULTS_FIGURES)/flux-aggregates-globals.pdf: \
+$(4_RESULTS_FIGURES)/flux-aggregates-globals-lg.pdf: \
 	$(4_RESULTS_SOURCE)/flux-aggregates.R \
 	$(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LG-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 	$(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 	$(3_INVERSION_INTERMEDIATES)/mip-fluxes.fst \
-	$(RESULTS_BASE_PARTIAL) \
-	$(RESULTS_DISPLAY_PARTIAL) \
-	$(RESULTS_TABLES_PARTIAL) \
-	$(RESULTS_FLUX_AGGREGATES_PARTIAL)
+	$(BASE_PARTIAL) \
+	$(DISPLAY_PARTIAL) \
+	$(TABLES_PARTIAL) \
+	$(FLUX_AGGREGATES_PARTIAL)
 	Rscript $< \
 		--region Global "Global land" "Global oceans" \
 		--flux-samples-lg $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LG-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 		--flux-samples-ln $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
-		--show-mip-fluxes \
+		--categories "MIP Prior" "MIP LG" "WOMBAT Prior" "WOMBAT LG" \
 		--mip-fluxes $(3_INVERSION_INTERMEDIATES)/mip-fluxes.fst \
 		--height 16.5 \
 		--output $@
 
-$(4_RESULTS_FIGURES)/flux-aggregates-zonal.pdf: \
+$(4_RESULTS_FIGURES)/flux-aggregates-globals-ln.pdf: \
 	$(4_RESULTS_SOURCE)/flux-aggregates.R \
 	$(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LG-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 	$(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 	$(3_INVERSION_INTERMEDIATES)/mip-fluxes.fst \
-	$(RESULTS_BASE_PARTIAL) \
-	$(RESULTS_DISPLAY_PARTIAL) \
-	$(RESULTS_TABLES_PARTIAL) \
-	$(RESULTS_FLUX_AGGREGATES_PARTIAL)
+	$(BASE_PARTIAL) \
+	$(DISPLAY_PARTIAL) \
+	$(TABLES_PARTIAL) \
+	$(FLUX_AGGREGATES_PARTIAL)
+	Rscript $< \
+		--region Global "Global land" "Global oceans" \
+		--flux-samples-lg $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LG-FIXEDAO-FIXEDWO5-NOBIAS.rds \
+		--flux-samples-ln $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
+		--categories "MIP Prior" "MIP LN" "WOMBAT Prior" "WOMBAT LN" \
+		--mip-fluxes $(3_INVERSION_INTERMEDIATES)/mip-fluxes.fst \
+		--height 16.5 \
+		--output $@
+
+$(4_RESULTS_FIGURES)/flux-aggregates-zonal-lg.pdf: \
+	$(4_RESULTS_SOURCE)/flux-aggregates.R \
+	$(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LG-FIXEDAO-FIXEDWO5-NOBIAS.rds \
+	$(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
+	$(3_INVERSION_INTERMEDIATES)/mip-fluxes.fst \
+	$(BASE_PARTIAL) \
+	$(DISPLAY_PARTIAL) \
+	$(TABLES_PARTIAL) \
+	$(FLUX_AGGREGATES_PARTIAL)
 	Rscript $< \
 		--region 'N extratropics (23.5 - 90)' 'N tropics (0 - 23.5)' 'S tropics (-23.5 - 0)' 'S extratropics (-90 - -23.5)' \
 		--flux-samples-lg $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LG-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 		--flux-samples-ln $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
-		--show-mip-fluxes \
+		--categories "MIP Prior" "MIP LG" "WOMBAT Prior" "WOMBAT LG" \
 		--mip-fluxes $(3_INVERSION_INTERMEDIATES)/mip-fluxes.fst \
 		--height 18 \
 		--small-y-axes \
 		--output $@
+
+$(4_RESULTS_FIGURES)/flux-aggregates-zonal-ln.pdf: \
+	$(4_RESULTS_SOURCE)/flux-aggregates.R \
+	$(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LG-FIXEDAO-FIXEDWO5-NOBIAS.rds \
+	$(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
+	$(3_INVERSION_INTERMEDIATES)/mip-fluxes.fst \
+	$(BASE_PARTIAL) \
+	$(DISPLAY_PARTIAL) \
+	$(TABLES_PARTIAL) \
+	$(FLUX_AGGREGATES_PARTIAL)
+	Rscript $< \
+		--region 'N extratropics (23.5 - 90)' 'N tropics (0 - 23.5)' 'S tropics (-23.5 - 0)' 'S extratropics (-90 - -23.5)' \
+		--flux-samples-lg $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LG-FIXEDAO-FIXEDWO5-NOBIAS.rds \
+		--flux-samples-ln $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
+		--categories "MIP Prior" "MIP LN" "WOMBAT Prior" "WOMBAT LN" \
+		--mip-fluxes $(3_INVERSION_INTERMEDIATES)/mip-fluxes.fst \
+		--height 18 \
+		--small-y-axes \
+		--output $@
+
 
 $(4_RESULTS_FIGURES)/flux-aggregates-rho0-globals.pdf: \
 	$(4_RESULTS_SOURCE)/flux-aggregates-rho0.R \
@@ -334,6 +390,7 @@ $(4_RESULTS_FIGURES)/flux-aggregates-rho0-globals.pdf: \
 		--flux-samples-ln $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 		--flux-samples-lg-uncorrelated $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LG-RHO0-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 		--flux-samples-ln-uncorrelated $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-RHO0-FIXEDAO-FIXEDWO5-NOBIAS.rds \
+		--categories "Prior" "LG, corr" "LN, corr" "LG, uncorr" "LN, uncorr" \
 		--height 19 \
 		--output $@
 
@@ -354,7 +411,7 @@ $(4_RESULTS_FIGURES)/flux-aggregates-rho0-mip-globals.pdf: \
 		--flux-samples-ln $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 		--flux-samples-lg-uncorrelated $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LG-RHO0-FIXEDAO-FIXEDWO5-NOBIAS.rds \
 		--flux-samples-ln-uncorrelated $(3_INVERSION_INTERMEDIATES)/real-flux-aggregates-samples-LN-RHO0-FIXEDAO-FIXEDWO5-NOBIAS.rds \
-		--show-mip-fluxes \
+		--categories "MIP Prior" "MIP LG" "MIP LN" "Prior" "LG, corr" "LN, corr" "LG, uncorr" "LN, uncorr" \
 		--mip-fluxes $(3_INVERSION_INTERMEDIATES)/mip-fluxes.fst \
 		--height 19 \
 		--output $@

@@ -1,9 +1,9 @@
 ESTIMATE_COLOURS <- c(
   'Truth' = 'black',
   'MIP Prior (min/mean/max)' = '#7570b3',
+  'WOMBAT Prior (mean)' = get_colour('wombat_prior'),
   'MIP LG (min/mean/max)' = '#d95f02',
   'MIP LN (min/mean/max)' = '#1b9e77',
-  'WOMBAT Prior (mean)' = get_colour('wombat_prior'),
   'WOMBAT LG (mean, 95% cred. int.)' = get_colour('wombat_lg'),
   'WOMBAT LN (mean, 95% cred. int.)' = get_colour('wombat_ln'),
   'Prior (mean)' = get_colour('wombat_prior'),
@@ -20,9 +20,9 @@ ESTIMATE_COLOURS <- c(
 ESTIMATE_LINETYPES = c(
   'Truth' = 'solid',
   'MIP Prior (min/mean/max)' = 'longdash',
+  'WOMBAT Prior (mean)' = 'solid',
   'MIP LG (min/mean/max)' = 'longdash',
   'MIP LN (min/mean/max)' = 'longdash',
-  'WOMBAT Prior (mean)' = 'solid',
   'WOMBAT LG (mean, 95% cred. int.)' = 'solid',
   'WOMBAT LN (mean, 95% cred. int.)' = 'solid',
   'Prior (mean)' = 'solid',
@@ -36,6 +36,10 @@ ESTIMATE_LINETYPES = c(
   'LN, online-corr. (mean, 95% cred. int.)' = 'longdash'
 )
 
+is_category <- function(x) {
+  sapply(x, function(x_i) any(startsWith(x_i, categories)))
+}
+
 log_info('Loading flux samples')
 flux_samples <- flux_samples %>%
   mutate(
@@ -46,9 +50,12 @@ flux_samples <- flux_samples %>%
       sprintf('%s (mean, 95%% cred. int.)', observation_group)
     ), levels = names(ESTIMATE_COLOURS))
   ) %>%
-  select(-observation_group)
+  select(-observation_group) %>%
+  filter(
+    is_category(as.character(estimate))
+  )
 
-if (show_mip_fluxes) {
+if (any(startsWith(categories, 'MIP'))) {
   log_info('Loading MIP fluxes')
   mip_fluxes <- fst::read_fst(args$mip_fluxes)
 
@@ -85,7 +92,10 @@ if (show_mip_fluxes) {
       is_prior = FALSE,
       estimate = factor(sprintf('MIP %s (min/mean/max)', which), levels = names(ESTIMATE_COLOURS))
     ) %>%
-    select(-which)
+    select(-which) %>%
+    filter(
+      is_category(as.character(estimate))
+    )
 }
 
 log_info('Calculating')
@@ -114,7 +124,7 @@ annual_fluxes <- flux_samples %>%
     year %in% c(2015, 2016)
   )
 
-if (show_mip_fluxes) {
+if (any(startsWith(categories, 'MIP'))) {
   annual_mip_fluxes <- mip_fluxes_modified %>%
     group_by(group, estimate, name, year) %>%
     summarise(
@@ -123,8 +133,16 @@ if (show_mip_fluxes) {
     ungroup() %>%
     group_by(estimate, name, year) %>%
     summarise(
-      flux_lower = min(flux_mean, na.rm = TRUE),
-      flux_upper = max(flux_mean, na.rm = TRUE),
+      flux_lower = if_else(
+        startsWith(as.character(estimate), 'MIP Prior')[1] & !show_prior_uncertainty,
+        as.double(NA),
+        min(flux_mean, na.rm = TRUE)
+      ),
+      flux_upper = if_else(
+        startsWith(as.character(estimate), 'MIP Prior')[1] & !show_prior_uncertainty,
+        as.double(NA),
+        max(flux_mean, na.rm = TRUE)
+      ),
       flux_mean = mean(flux_mean, na.rm = TRUE)
     ) %>%
     filter(
@@ -155,7 +173,7 @@ monthly_fluxes <- flux_samples %>%
   ) %>%
   select(estimate, name, month_start, flux_mean, flux_lower, flux_upper)
 
-if (show_mip_fluxes) {
+if (any(startsWith(categories, 'MIP'))) {
   monthly_mip_fluxes <- mip_fluxes_modified %>%
     group_by(group, estimate, name, month_start) %>%
     summarise(
@@ -164,17 +182,31 @@ if (show_mip_fluxes) {
     ungroup() %>%
     group_by(estimate, name, month_start) %>%
     summarise(
-      flux_lower = min(flux_mean, na.rm = TRUE),
-      flux_upper = max(flux_mean, na.rm = TRUE),
+      flux_lower = if_else(
+        startsWith(as.character(estimate), 'MIP Prior') & !show_prior_uncertainty,
+        as.double(NA),
+        min(flux_mean, na.rm = TRUE)
+      ),
+      flux_upper = if_else(
+        startsWith(as.character(estimate), 'MIP Prior') & !show_prior_uncertainty,
+        as.double(NA),
+        max(flux_mean, na.rm = TRUE)
+      ),
       flux_mean = mean(flux_mean, na.rm = TRUE)
     )
 } else {
   monthly_mip_fluxes <- NULL
 }
 
-scale_colour_estimate <- scale_colour_manual(values = ESTIMATE_COLOURS)
-scale_linetype_estimate <- scale_linetype_manual(values = ESTIMATE_LINETYPES)
-scale_fill_estimate <- scale_fill_manual(values = ESTIMATE_COLOURS)
+scale_colour_estimate <- scale_colour_manual(
+  values = ESTIMATE_COLOURS[is_category(names(ESTIMATE_COLOURS))]
+)
+scale_linetype_estimate <- scale_linetype_manual(
+  values = ESTIMATE_LINETYPES[is_category(names(ESTIMATE_LINETYPES))]
+)
+scale_fill_estimate <- scale_fill_manual(
+  values = ESTIMATE_COLOURS[is_category(names(ESTIMATE_COLOURS))]
+)
 
 region_plots <- lapply(args$region, function(region_i) {
   annual_plot <- ggplot() +
