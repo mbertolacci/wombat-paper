@@ -124,11 +124,23 @@ tar xzf ~/path/to/wombat-inversion-intermediates-20210209.tar.gz
 Then run
 
 ```
-touch 3_inversion/intermediates/control-emissions.fst \
-  3_inversion/intermediates/control-mole-fraction.fst \
-  3_inversion/intermediates/perturbations.fst \
-  3_inversion/intermediates/osse-anomaly.fst \
-  3_inversion/intermediates/sensitivities.fst
+for run in random1 random2; do
+  mkdir -p 3_inversion/intermediates/GEOS_Chem/runs/run.v12.3.2.osse.$run
+  (
+    cd 3_inversion/intermediates/GEOS_Chem/runs/run.v12.3.2.osse.$run \
+    && touch LAST_PREPARED RUN_COMPLETE
+  )
+  mkdir -p 3_inversion/intermediates/GEOS_Chem/matched-runs/run.v12.3.2.osse.$run
+  (
+    cd 3_inversion/intermediates/GEOS_Chem/matched-runs/run.v12.3.2.osse.$run \
+    && touch LAST_SUBSETTED LAST_COMPUTED_XCO2 LAST_COMBINED
+  )
+done
+(
+  cd 3_inversion/intermediates \
+  && touch control-emissions.fst control-mole-fraction.fst perturbations.fst \
+      osse-anomaly.fst sensitivities.fst
+)
 ```
 
 to bring the timestamps up to date. Then you can run the workflow from step 3 onwards as described in [Running inversions and generating the figures](#running-inversions-and-generating-the-figures).
