@@ -470,11 +470,11 @@ $(4_RESULTS_INTERMEDIATES)/mip-tccon.fst: \
 		--mip-tccon-residual $(3_INVERSION_INTERMEDIATES)/mip-tccon-residual.fst \
 		--output $@
 
-$(4_RESULTS_INTERMEDIATES)/xco2-daily-base.nc: 2_matching/intermediates/GEOS_Chem/matched-runs/run.v12.3.2.base/xco2-3hr.nc
-	cdo -z zip_6 -daymean $< $@
+$(4_RESULTS_INTERMEDIATES)/xco2-daily-base.nc:
+	cdo -z zip_6 -daymean 2_matching/intermediates/GEOS_Chem/matched-runs/run.v12.3.2.base/xco2-3hr.nc $@
 
-$(4_RESULTS_INTERMEDIATES)/xco2-daily-201601R02.nc: 2_matching/intermediates/GEOS_Chem/matched-runs/2016/run.v12.3.2.R02M01/xco2-3hr.nc
-	cdo -z zip_6 -daymean $< $@
+$(4_RESULTS_INTERMEDIATES)/xco2-daily-201601R02.nc:
+	cdo -z zip_6 -daymean 2_matching/intermediates/GEOS_Chem/matched-runs/2016/run.v12.3.2.R02M01/xco2-3hr.nc $@
 
-$(4_RESULTS_INTERMEDIATES)/xco2-daily-201601R06.nc: 2_matching/intermediates/GEOS_Chem/matched-runs/2016/run.v12.3.2.R06M01/xco2-3hr.nc
-	cdo -z zip_6 -daymean $< $@
+$(4_RESULTS_INTERMEDIATES)/xco2-daily-201601R06.nc:
+	cdo -z zip_6 -daymean 2_matching/intermediates/GEOS_Chem/matched-runs/2016/run.v12.3.2.R06M01/xco2-3hr.nc $@

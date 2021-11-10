@@ -42,7 +42,10 @@ wombat-inversion-intermediates.tar.gz:
 	    3_inversion/intermediates/control-mole-fraction.fst \
 	    3_inversion/intermediates/perturbations.fst \
 	    3_inversion/intermediates/osse-anomaly.fst \
-	    3_inversion/intermediates/sensitivities.fst
+	    3_inversion/intermediates/sensitivities.fst \
+	    4_results/intermediates/xco2-daily-201601R02.nc \
+	    4_results/intermediates/xco2-daily-201601R06.nc \
+	    4_results/intermediates/xco2-daily-base.nc
 
 lint: $(LINT_TARGETS)
 clean: $(CLEAN_TARGETS)
