@@ -234,7 +234,7 @@ make -j4 4_results_targets
 You can modify the `-j` option to suit your local system. If you have access to a GPU and have installed `tensorflow` (see [Install tensorflow](#install-tensorflow)), you can run inversions using
 
 ```
-WOMBAT_TENSORFLOW=1 make -j1 3_inversion
+WOMBAT_TENSORFLOW=1 make -j1 3_inversion_targets
 make -j4 4_results_targets
 ```
 
