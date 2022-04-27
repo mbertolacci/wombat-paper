@@ -1,0 +1,19 @@
+name: conda-env
+channels:
+  - conda-forge
+  - r
+  - defaults
+dependencies:
+  # R tools
+  - r-base
+  - r-essentials
+  - r-tidyverse
+  # Python
+  - jupyter
+  - numpy
+  - pandas
+  - scipy
+  - xarray
+  - dask
+  - netcdf4
+  prefix: .conda_env

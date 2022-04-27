@@ -30,7 +30,8 @@ def process_observation_file(observation_filename):
                 "second": ds["cdate"].values[:, 5],
             }
         )
-        ds["time"] = ("n_obs", xarray.DataArray(pd.to_datetime(df)))
+
+        ds["time"] = ("n_obs", pd.to_datetime(df))
 
         return xarray.Dataset(
             {
@@ -43,16 +44,10 @@ def process_observation_file(observation_filename):
 
 
 def read_tccon_observations(observation_directory):
-    observation_filenames = sorted(
-        glob.glob(os.path.join(observation_directory, "*.nc4"))
-    )
+    observation_filenames = sorted(glob.glob(os.path.join(observation_directory, "*.nc4")))
 
-    logger.debug(
-        "Reading and concatenating %d observation files", len(observation_filenames)
-    )
-    datasets = (
-        process_observation_file(filename) for filename in observation_filenames
-    )
+    logger.debug("Reading and concatenating %d observation files", len(observation_filenames))
+    datasets = (process_observation_file(filename) for filename in observation_filenames)
     observation_ds = xarray.concat(datasets, dim="sounding_id").sortby("time")
 
     return observation_ds

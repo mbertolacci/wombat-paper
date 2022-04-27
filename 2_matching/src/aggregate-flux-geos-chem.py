@@ -1,20 +1,14 @@
 import argparse
 import concurrent.futures
-import glob
 import logging
 import os
 import pathlib
 import xarray
 
 from geoschem.grid import GEOS_CHEM_GRID
-from geoschem.obspack import subset_for_obspack
-from geoschem.oco2 import subset_for_oco2
-from geoschem.tccon import subset_for_tccon
 from geoschem.utils import get_runs, get_run_attributes
 
-logging.basicConfig(
-    format="[%(levelname)s] [%(asctime)s] %(message)s", level=logging.INFO
-)
+logging.basicConfig(format="[%(levelname)s] [%(asctime)s] %(message)s", level=logging.INFO)
 
 parser = argparse.ArgumentParser(
     description="""
@@ -26,14 +20,10 @@ Aggregate GEOS-Chem fluxes to monthly.
 parser.add_argument(
     "--runs-directory",
     type=str,
-    help=(
-        "Base directory of runs (typically 1_transport/intermediates/" "GEOS_Chem/runs)"
-    ),
+    help=("Base directory of runs (typically 1_transport/intermediates/" "GEOS_Chem/runs)"),
     required=True,
 )
-parser.add_argument(
-    "--output-directory", type=str, help="Output directory", required=True
-)
+parser.add_argument("--output-directory", type=str, help="Output directory", required=True)
 max_workers_default = os.environ.get("WOMBAT_MAX_WORKERS", None)
 parser.add_argument(
     "--max-workers",
@@ -68,18 +58,14 @@ def aggregate_run(run):
         log_info("Skipping because %s exists", output_path)
         return
 
-    emission_files = sorted(
-        glob.glob(
-            os.path.join(
-                os.path.join(run["full_path"], "output"), "HEMCO_diagnostics.*.nc"
-            )
-        )
+    emission_files = os.path.join(
+        os.path.join(run["full_path"], "output"), "HEMCO_diagnostics.*.nc"
     )
+
     log_info("Loading %d files", len(emission_files))
     ds = xarray.open_mfdataset(
         emission_files,
         combine="by_coords",
-        concat_dim="time",
         data_vars="minimal",
         coords="minimal",
         compat="override",

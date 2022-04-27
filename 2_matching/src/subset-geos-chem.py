@@ -10,9 +10,7 @@ from geoschem.oco2 import subset_for_oco2
 from geoschem.tccon import subset_for_tccon, read_tccon_observations
 from geoschem.utils import get_runs, get_run_attributes
 
-logging.basicConfig(
-    format="[%(levelname)s] [%(asctime)s] %(message)s", level=logging.INFO
-)
+logging.basicConfig(format="[%(levelname)s] [%(asctime)s] %(message)s", level=logging.INFO)
 
 parser = argparse.ArgumentParser(
     description="""
@@ -25,9 +23,7 @@ GEOS-Chem.
 parser.add_argument(
     "--runs-directory",
     type=str,
-    help=(
-        "Base directory of runs (typically 1_transport/intermediates/" "GEOS_Chem/runs)"
-    ),
+    help=("Base directory of runs (typically 1_transport/intermediates/GEOS_Chem/runs)"),
     required=True,
 )
 parser.add_argument(
@@ -42,9 +38,7 @@ parser.add_argument(
     help="TCCON observation directory",
     required=True,
 )
-parser.add_argument(
-    "--output-directory", type=str, help="Output directory", required=True
-)
+parser.add_argument("--output-directory", type=str, help="Output directory", required=True)
 max_workers_default = os.environ.get("WOMBAT_MAX_WORKERS", None)
 parser.add_argument(
     "--max-workers",
