@@ -9,9 +9,7 @@ def get_run_attributes(run):
     """Gives the dictionary of attributes to associate with an output file"""
     match = re.match(r"(\d\d\d\d)?\/?run\.v(\d+\.\d+\.\d+)\.(\w+)", run["short_path"])
 
-    git_commit = (
-        subprocess.check_output(["git", "rev-parse", "HEAD"]).decode("utf-8").strip()
-    )
+    git_commit = subprocess.check_output(["git", "rev-parse", "HEAD"]).decode("utf-8").strip()
     if match.group(1) is None:
         if match.group(3) == "base":
             run_type = "base"
@@ -52,9 +50,7 @@ def get_runs(runs_directory):
         to_remove = []
         for dirname in dirs:
             if dirname.startswith("run."):
-                run_paths.append(
-                    os.path.relpath(os.path.join(root, dirname), runs_directory)
-                )
+                run_paths.append(os.path.relpath(os.path.join(root, dirname), runs_directory))
                 to_remove.append(dirname)
         for dirname in to_remove:
             dirs.remove(dirname)

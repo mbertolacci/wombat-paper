@@ -1,14 +1,14 @@
-name: conda-env
+name: null
 channels:
   - conda-forge
-  - r
   - defaults
+  - r
 dependencies:
-  # R tools
   - r-base
   - r-essentials
   - r-tidyverse
-  # Python
+  - r-netcdf4
+  - python=3.9
   - jupyter
   - numpy
   - pandas

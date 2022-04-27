@@ -3,7 +3,6 @@ import concurrent.futures
 import logging
 import os
 import pathlib
-import xarray
 
 from geoschem.obspack import subset_for_obspack
 from geoschem.oco2 import subset_for_oco2

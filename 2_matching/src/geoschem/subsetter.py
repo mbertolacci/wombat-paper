@@ -81,19 +81,15 @@ def process_history_file(
             match_to_grid(GEOS_CHEM_GRID["latitude"], observation_lats),
             dims="sounding_id",
         )
-        variable = ds[input_variable_name][
-            time_indices, :, lat_indices, lon_indices
-        ].drop_vars([drop_variable_name])
+        variable = ds[input_variable_name][time_indices, :, lat_indices, lon_indices].drop_vars(
+            [drop_variable_name]
+        )
         sounding_id = observation_ds["sounding_id"][start_index:end_index]
         return xarray.Dataset(
             {
                 output_variable_name: variable,
-                "observation_longitude": observation_ds["longitude"][
-                    start_index:end_index
-                ],
-                "observation_latitude": observation_ds["latitude"][
-                    start_index:end_index
-                ],
+                "observation_longitude": observation_ds["longitude"][start_index:end_index],
+                "observation_latitude": observation_ds["latitude"][start_index:end_index],
             },
             coords={"sounding_id": sounding_id},
         )
@@ -108,9 +104,7 @@ class GEOSChemSubsetter(object):
         is_subset_hourly,
     ):
         self.observation_ds = observation_ds
-        self.observation_days = self.observation_ds["time"].values.astype(
-            "datetime64[D]"
-        )
+        self.observation_days = self.observation_ds["time"].values.astype("datetime64[D]")
         self.run_directory_species_conc = run_directory_species_conc
         self.run_directory_level_edge = run_directory_level_edge
         self.is_subset_hourly = is_subset_hourly
@@ -167,17 +161,13 @@ class GEOSChemSubsetter(object):
         drop_variable_name,
         times_to_match,
     ):
-        history_files = np.array(
-            glob.glob(os.path.join(run_directory, "output", pattern))
-        )
+        history_files = np.array(glob.glob(os.path.join(run_directory, "output", pattern)))
         history_files.sort()
 
         if self.is_subset_hourly:
             history_dates = np.array(
                 [
-                    to_iso8601_date(
-                        re.match(r"^.*(\d{8})_0000z\.nc4$", history_file).group(1)
-                    )
+                    to_iso8601_date(re.match(r"^.*(\d{8})_0000z\.nc4$", history_file).group(1))
                     for history_file in history_files
                 ],
                 dtype="datetime64[D]",
@@ -185,9 +175,7 @@ class GEOSChemSubsetter(object):
         else:
             history_dates = np.array(
                 [
-                    to_iso8601_date(
-                        re.match(r"^.*(\d{6})\.nc4$", history_file).group(1)
-                    )
+                    to_iso8601_date(re.match(r"^.*(\d{6})\.nc4$", history_file).group(1))
                     for history_file in history_files
                 ],
                 dtype="datetime64[M]",

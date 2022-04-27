@@ -30,9 +30,7 @@ def process_obspack_file(obspack_filename):
 
 
 def subset_for_obspack(run_directory, output_path, attributes):
-    obspack_paths = glob.glob(
-        os.path.join(run_directory, "output", "GEOSChem.ObsPack.*.nc4")
-    )
+    obspack_paths = glob.glob(os.path.join(run_directory, "output", "GEOSChem.ObsPack.*.nc4"))
     if len(obspack_paths) == 0:
         return
 
@@ -46,9 +44,7 @@ def subset_for_obspack(run_directory, output_path, attributes):
     # averaging interval may pass midnight, so we need to recombine the samples
     logger.debug("Averaging samples")
     all_data_df["CO2_sum"] = all_data_df["CO2"] * all_data_df["nsamples"]
-    co2_df = (
-        all_data_df[["obspack_id", "nsamples", "CO2_sum"]].groupby("obspack_id").sum()
-    )
+    co2_df = all_data_df[["obspack_id", "nsamples", "CO2_sum"]].groupby("obspack_id").sum()
     co2_df["CO2"] = co2_df["CO2_sum"] / co2_df["nsamples"]
     # Grab the metadata. The min() aggregation is just to eliminate duplicates
     other_df = (
@@ -70,9 +66,7 @@ def subset_for_obspack(run_directory, output_path, attributes):
     # Add the time and location. Note that the time is the centre of the
     # averaging period (i.e., the 'actual' observation time), while the
     # location is the model grid cell centre
-    output["time"] = (
-        output["averaging_interval_start"] + output["averaging_interval"] / 2
-    )
+    output["time"] = output["averaging_interval_start"] + output["averaging_interval"] / 2
     output["observation_latitude"] = output["lat"]
     output["model_latitude"] = GEOS_CHEM_GRID["latitude"]["centres"][
         match_to_grid(GEOS_CHEM_GRID["latitude"], output["lat"])
