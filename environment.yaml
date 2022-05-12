@@ -1,0 +1,20 @@
+name: null
+channels:
+  - conda-forge
+  - defaults
+  - r
+dependencies:
+  - r-base
+  - r-essentials
+  - r-tidyverse
+  - python=3.8
+  - jupyter
+  - numpy
+  - pandas
+  - scipy
+  - xarray
+  - dask
+  - netcdf4
+  - libgdal
+  - pkg-config
+  prefix: .conda_env

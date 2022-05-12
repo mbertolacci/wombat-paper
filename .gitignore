@@ -1,8 +1,13 @@
 .conda_env/
+.history
+.ipynb_checkpoints
+.vscode
 1_transport/intermediates/
 2_matching/intermediates/
 3_inversion/intermediates/
 3_inversion/figures/
 4_results/intermediates/
 4_results/figures/
+data/TCCON
+data/OCO2_b70b_10sec_WL15_GOOD_v10.nc
 *.pyc
